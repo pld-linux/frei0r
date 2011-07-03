@@ -4,14 +4,17 @@ Name:		frei0r
 Version:	1.3
 Release:	2
 License:	GPL v2+
-Group:		Applications
+Group:		Libraries
 Source0:	http://piksel.no/frei0r/releases/%{name}-plugins-%{version}.tar.gz
 # Source0-md5:	a2eb63feeeb0c5cf439ccca276cbf70c
 URL:		http://frei0r.org/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	gavl-devel >= 0.2.3
+BuildRequires:	libtool >= 2:2.0
 BuildRequires:	opencv-devel >= 1.0.0
+BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -95,7 +98,10 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 %prep
 %setup -q
 
+sed -i -e 's/^PACKAGE_LIB_DIR=.*/PACKAGE_LIB_DIR=${libdir}/' configure.ac
+
 %build
+%{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}

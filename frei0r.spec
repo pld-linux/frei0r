@@ -2,7 +2,7 @@ Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
 Version:	1.3
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://piksel.no/frei0r/releases/%{name}-plugins-%{version}.tar.gz
@@ -10,6 +10,7 @@ Source0:	http://piksel.no/frei0r/releases/%{name}-plugins-%{version}.tar.gz
 URL:		http://frei0r.org/
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	opencv-devel >= 1.0.0
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -92,6 +93,7 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 
 %prep
 %setup -q
+%{__sed} -i 's,/lib,/%{_lib},' src/filter/facedetect/Makefile
 
 %build
 # --enable-cpuflags (default) detects MMX/SSE/SSE2/SSSE3 basing on /proc/cpuinfo on build host

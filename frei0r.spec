@@ -8,9 +8,10 @@ Group:		Applications
 Source0:	http://piksel.no/frei0r/releases/%{name}-plugins-%{version}.tar.gz
 # Source0-md5:	a2eb63feeeb0c5cf439ccca276cbf70c
 URL:		http://frei0r.org/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	opencv-devel >= 1.0.0
-BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -93,9 +94,12 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 
 %prep
 %setup -q
-%{__sed} -i 's,/lib,/%{_lib},' src/filter/facedetect/Makefile
 
 %build
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 # --enable-cpuflags (default) detects MMX/SSE/SSE2/SSSE3 basing on /proc/cpuinfo on build host
 %configure \
 	--disable-cpuflags

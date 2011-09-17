@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	opencv		# build without OpenCV support
+#
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
@@ -12,7 +16,7 @@ BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	libtool >= 2:2.0
-BuildRequires:	opencv-devel >= 1.0.0
+%{?with_opencv:BuildRequires:	opencv-devel >= 1.0.0}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -237,10 +241,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/vectorscope.so
 %attr(755,root,root) %{_libdir}/frei0r-1/rgbparade.so
 
+%if %{with opencv}
 %files plugins-opencv
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/frei0r-1/facebl0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/facedetect.so
+%endif
 
 %files devel
 %defattr(644,root,root,755)

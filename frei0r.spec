@@ -2,11 +2,15 @@
 # Conditional build:
 %bcond_without	opencv		# build without OpenCV support
 #
+%ifarch x32
+%undefine	with_opencv
+%endif
+
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
 Version:	1.3
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://piksel.no/frei0r/releases/%{name}-plugins-%{version}.tar.gz

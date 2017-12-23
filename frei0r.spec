@@ -9,16 +9,19 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	1.3
-Release:	5
+Version:	1.6.1
+Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	http://piksel.no/frei0r/releases/%{name}-plugins-%{version}.tar.gz
-# Source0-md5:	a2eb63feeeb0c5cf439ccca276cbf70c
-URL:		http://frei0r.org/
+Source0:	https://files.dyne.org/frei0r/%{name}-plugins-%{version}.tar.gz
+# Source0-md5:	bb85573340029e5d0ae1c21d0685461d
+URL:		https://frei0r.dyne.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
+BuildRequires:	cairo-devel >= 1.0.0
+BuildRequires:	doxygen
 BuildRequires:	gavl-devel >= 0.2.3
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
 %{?with_opencv:BuildRequires:	opencv-devel >= 1.0.0}
 BuildRequires:	pkgconfig
@@ -52,6 +55,21 @@ Base set of Frei0r plugins.
 
 %description plugins -l pl.UTF-8
 Podstawowy zestaw wtyczek Frei0r.
+
+%package plugins-cairo
+Summary:	Frei0r plugins that use Cairo library
+Summary(pl.UTF-8):	Wtyczki Frei0r wykorzystujące bibliotekę Cairo
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	cairo >= 1.0.0
+
+%description plugins-cairo
+Frei0r plugins that use Cairo library: cairoaffineblend, cairoblend,
+cairogradient, cairoimagegrid, ndvi.
+
+%description plugins-cairo -l pl.UTF-8
+Wtyczki Frei0r wykorzystujące bibliotekę Cairo: cairoaffineblend,
+cairoblend, cairogradient, cairoimagegrid, ndvi.
 
 %package plugins-gavl
 Summary:	Frei0r plugins that use GAVL library
@@ -104,7 +122,7 @@ które można sterować parametrami.
 Ten pakiet zawiera plik nagłówkowy API Frei0r.
 
 %prep
-%setup -q
+%setup -q -n frei0r-plugins-%{version}
 
 sed -i -e 's/^PACKAGE_LIB_DIR=.*/PACKAGE_LIB_DIR=${libdir}/' configure.ac
 
@@ -130,7 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS.txt ChangeLog.txt README.txt TODO.txt
 %dir %{_libdir}/frei0r-1
 
 %files plugins
@@ -138,6 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/3dflippo.so
 %attr(755,root,root) %{_libdir}/frei0r-1/B.so
 %attr(755,root,root) %{_libdir}/frei0r-1/G.so
+%attr(755,root,root) %{_libdir}/frei0r-1/IIRblur.so
 %attr(755,root,root) %{_libdir}/frei0r-1/R.so
 %attr(755,root,root) %{_libdir}/frei0r-1/RGB.so
 %attr(755,root,root) %{_libdir}/frei0r-1/addition.so
@@ -153,6 +172,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/alphaxor.so
 %attr(755,root,root) %{_libdir}/frei0r-1/balanc0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/baltan.so
+%attr(755,root,root) %{_libdir}/frei0r-1/bgsubtract0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/blend.so
 %attr(755,root,root) %{_libdir}/frei0r-1/bluescreen0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/brightness.so
@@ -161,9 +181,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/c0rners.so
 %attr(755,root,root) %{_libdir}/frei0r-1/cartoon.so
 %attr(755,root,root) %{_libdir}/frei0r-1/cluster.so
+%attr(755,root,root) %{_libdir}/frei0r-1/colgate.so
 %attr(755,root,root) %{_libdir}/frei0r-1/color_only.so
 %attr(755,root,root) %{_libdir}/frei0r-1/coloradj_RGB.so
 %attr(755,root,root) %{_libdir}/frei0r-1/colordistance.so
+%attr(755,root,root) %{_libdir}/frei0r-1/colorhalftone.so
+%attr(755,root,root) %{_libdir}/frei0r-1/colorize.so
+%attr(755,root,root) %{_libdir}/frei0r-1/colortap.so
 %attr(755,root,root) %{_libdir}/frei0r-1/composition.so
 %attr(755,root,root) %{_libdir}/frei0r-1/contrast0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/curves.so
@@ -174,12 +198,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/delaygrab.so
 %attr(755,root,root) %{_libdir}/frei0r-1/difference.so
 %attr(755,root,root) %{_libdir}/frei0r-1/distort0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/dither.so
 %attr(755,root,root) %{_libdir}/frei0r-1/divide.so
 %attr(755,root,root) %{_libdir}/frei0r-1/dodge.so
 %attr(755,root,root) %{_libdir}/frei0r-1/edgeglow.so
+%attr(755,root,root) %{_libdir}/frei0r-1/emboss.so
 %attr(755,root,root) %{_libdir}/frei0r-1/equaliz0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/flippo.so
 %attr(755,root,root) %{_libdir}/frei0r-1/gamma.so
+%attr(755,root,root) %{_libdir}/frei0r-1/glitch0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/glow.so
 %attr(755,root,root) %{_libdir}/frei0r-1/grain_extract.so
 %attr(755,root,root) %{_libdir}/frei0r-1/grain_merge.so
@@ -189,6 +216,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/hueshift0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/invert0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/ising0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/keyspillm0pup.so
 %attr(755,root,root) %{_libdir}/frei0r-1/lenscorrection.so
 %attr(755,root,root) %{_libdir}/frei0r-1/letterb0xed.so
 %attr(755,root,root) %{_libdir}/frei0r-1/levels.so
@@ -197,6 +225,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/lissajous0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/luminance.so
 %attr(755,root,root) %{_libdir}/frei0r-1/mask0mate.so
+%attr(755,root,root) %{_libdir}/frei0r-1/medians.so
 %attr(755,root,root) %{_libdir}/frei0r-1/multiply.so
 %attr(755,root,root) %{_libdir}/frei0r-1/nervous.so
 %attr(755,root,root) %{_libdir}/frei0r-1/nois0r.so
@@ -207,18 +236,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/perspective.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pixeliz0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/plasma.so
+%attr(755,root,root) %{_libdir}/frei0r-1/posterize.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pr0be.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pr0file.so
 %attr(755,root,root) %{_libdir}/frei0r-1/primaries.so
+%attr(755,root,root) %{_libdir}/frei0r-1/rgbnoise.so
+%attr(755,root,root) %{_libdir}/frei0r-1/rgbsplit0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/saturat0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/saturation.so
 %attr(755,root,root) %{_libdir}/frei0r-1/scanline0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/screen.so
 %attr(755,root,root) %{_libdir}/frei0r-1/select0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/sharpness.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sigmoidaltransfer.so
 %attr(755,root,root) %{_libdir}/frei0r-1/sobel.so
+%attr(755,root,root) %{_libdir}/frei0r-1/softglow.so
 %attr(755,root,root) %{_libdir}/frei0r-1/softlight.so
 %attr(755,root,root) %{_libdir}/frei0r-1/sopsat.so
+%attr(755,root,root) %{_libdir}/frei0r-1/spillsupress.so
 %attr(755,root,root) %{_libdir}/frei0r-1/squareblur.so
 %attr(755,root,root) %{_libdir}/frei0r-1/subtract.so
 %attr(755,root,root) %{_libdir}/frei0r-1/tehroxx0r.so
@@ -231,13 +266,23 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/three_point_balance.so
 %attr(755,root,root) %{_libdir}/frei0r-1/threelay0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/threshold0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/timeout.so
 %attr(755,root,root) %{_libdir}/frei0r-1/tint0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/transparency.so
 %attr(755,root,root) %{_libdir}/frei0r-1/twolay0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/uvmap.so
 %attr(755,root,root) %{_libdir}/frei0r-1/value.so
 %attr(755,root,root) %{_libdir}/frei0r-1/vertigo.so
+%attr(755,root,root) %{_libdir}/frei0r-1/vignette.so
 %attr(755,root,root) %{_libdir}/frei0r-1/xfade0r.so
+
+%files plugins-cairo
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/frei0r-1/cairoaffineblend.so
+%attr(755,root,root) %{_libdir}/frei0r-1/cairoblend.so
+%attr(755,root,root) %{_libdir}/frei0r-1/cairogradient.so
+%attr(755,root,root) %{_libdir}/frei0r-1/cairoimagegrid.so
+%attr(755,root,root) %{_libdir}/frei0r-1/ndvi.so
 
 %files plugins-gavl
 %defattr(644,root,root,755)

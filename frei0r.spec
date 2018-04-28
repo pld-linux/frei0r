@@ -10,7 +10,7 @@ Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
 Version:	1.6.1
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://files.dyne.org/frei0r/%{name}-plugins-%{version}.tar.gz

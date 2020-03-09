@@ -9,12 +9,12 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	1.6.1
-Release:	3
+Version:	1.7.0
+Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	https://files.dyne.org/frei0r/%{name}-plugins-%{version}.tar.gz
-# Source0-md5:	bb85573340029e5d0ae1c21d0685461d
+Source0:	https://files.dyne.org/frei0r/releases/%{name}-plugins-%{version}.tar.gz
+# Source0-md5:	78a7c7511cbda93013147563dc7a3618
 URL:		https://frei0r.dyne.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -124,7 +124,12 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 %prep
 %setup -q -n frei0r-plugins-%{version}
 
-sed -i -e 's/^PACKAGE_LIB_DIR=.*/PACKAGE_LIB_DIR=${libdir}/' configure.ac
+%{__mv} AUTHORS.txt AUTHORS
+%{__mv} ChangeLog.txt ChangeLog
+%{__mv} README.txt README.md
+%{__mv} TODO.txt TODO
+
+sed -i -e '/^PACKAGE_LIB_DIR=/ s,/lib/,/%{_lib}/,' configure.ac
 
 %build
 %{__libtoolize}
@@ -143,12 +148,15 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/frei0r-plugins
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS.txt ChangeLog.txt README.txt TODO.txt
+%doc AUTHORS ChangeLog README.md TODO
 %dir %{_libdir}/frei0r-1
 
 %files plugins
@@ -202,6 +210,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/divide.so
 %attr(755,root,root) %{_libdir}/frei0r-1/dodge.so
 %attr(755,root,root) %{_libdir}/frei0r-1/edgeglow.so
+%attr(755,root,root) %{_libdir}/frei0r-1/elastic_scale.so
 %attr(755,root,root) %{_libdir}/frei0r-1/emboss.so
 %attr(755,root,root) %{_libdir}/frei0r-1/equaliz0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/flippo.so
@@ -229,6 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/multiply.so
 %attr(755,root,root) %{_libdir}/frei0r-1/nervous.so
 %attr(755,root,root) %{_libdir}/frei0r-1/nois0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/normaliz0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/nosync0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/onecol0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/overlay.so
@@ -239,6 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/posterize.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pr0be.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pr0file.so
+%attr(755,root,root) %{_libdir}/frei0r-1/premultiply.so
 %attr(755,root,root) %{_libdir}/frei0r-1/primaries.so
 %attr(755,root,root) %{_libdir}/frei0r-1/rgbnoise.so
 %attr(755,root,root) %{_libdir}/frei0r-1/rgbsplit0r.so

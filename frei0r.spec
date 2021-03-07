@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	opencv		# build without OpenCV support
+%bcond_with	opencv		# build without OpenCV support
 #
 %ifarch x32
 %undefine	with_opencv
@@ -10,21 +10,18 @@ Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
 Version:	1.7.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://files.dyne.org/frei0r/releases/%{name}-plugins-%{version}.tar.gz
 # Source0-md5:	78a7c7511cbda93013147563dc7a3618
 URL:		https://frei0r.dyne.org/
-BuildRequires:	autoconf >= 2.60
-BuildRequires:	automake
+BuildRequires:	cmake
 BuildRequires:	cairo-devel >= 1.0.0
 BuildRequires:	doxygen
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:2.0
 %{?with_opencv:BuildRequires:	opencv-devel >= 1.0.0}
-BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -129,27 +126,19 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 %{__mv} README.txt README.md
 %{__mv} TODO.txt TODO
 
-sed -i -e '/^PACKAGE_LIB_DIR=/ s,/lib/,/%{_lib}/,' configure.ac
-
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-# --enable-cpuflags (default) detects MMX/SSE/SSE2/SSSE3 basing on /proc/cpuinfo on build host
-%configure \
-	--disable-cpuflags
+mkdir -p build
+cd build
+%cmake ../ \
+	%{!?with_opencv:-DWITHOUT_OPENCV:BOOL=ON}
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# packaged as %doc
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/frei0r-plugins
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -267,7 +256,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/spillsupress.so
 %attr(755,root,root) %{_libdir}/frei0r-1/squareblur.so
 %attr(755,root,root) %{_libdir}/frei0r-1/subtract.so
-%attr(755,root,root) %{_libdir}/frei0r-1/tehroxx0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/tehRoxx0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/test_pat_B.so
 %attr(755,root,root) %{_libdir}/frei0r-1/test_pat_C.so
 %attr(755,root,root) %{_libdir}/frei0r-1/test_pat_G.so

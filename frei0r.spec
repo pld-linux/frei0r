@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	opencv		# OpenCV support
+%bcond_without	opencv		# OpenCV support
 #
 %ifarch x32
 %undefine	with_opencv

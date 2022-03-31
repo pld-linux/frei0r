@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	opencv		# build without OpenCV support
+%bcond_with	opencv		# OpenCV support
 #
 %ifarch x32
 %undefine	with_opencv
@@ -9,20 +9,20 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	1.7.0
-Release:	3
+Version:	1.8.0
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://files.dyne.org/frei0r/releases/%{name}-plugins-%{version}.tar.gz
-# Source0-md5:	78a7c7511cbda93013147563dc7a3618
+# Source0-md5:	45ffe53925ce0a90ce1d838c05e0a3c0
 URL:		https://frei0r.dyne.org/
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.8
 BuildRequires:	cairo-devel >= 1.0.0
 BuildRequires:	doxygen
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	libstdc++-devel
 %{?with_opencv:BuildRequires:	opencv-devel >= 1.0.0}
-BuildRequires:	sed >= 4.0
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -121,15 +121,10 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 %prep
 %setup -q -n frei0r-plugins-%{version}
 
-%{__mv} AUTHORS.txt AUTHORS
-%{__mv} ChangeLog.txt ChangeLog
-%{__mv} README.txt README.md
-%{__mv} TODO.txt TODO
-
 %build
 mkdir -p build
 cd build
-%cmake ../ \
+%cmake .. \
 	%{!?with_opencv:-DWITHOUT_OPENCV:BOOL=ON}
 
 %{__make}
@@ -145,7 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README.md TODO
+%doc AUTHORS.txt ChangeLog.txt README.txt
 %dir %{_libdir}/frei0r-1
 
 %files plugins
@@ -158,6 +153,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/RGB.so
 %attr(755,root,root) %{_libdir}/frei0r-1/addition.so
 %attr(755,root,root) %{_libdir}/frei0r-1/addition_alpha.so
+%attr(755,root,root) %{_libdir}/frei0r-1/aech0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alpha0ps.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphaatop.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphagrad.so

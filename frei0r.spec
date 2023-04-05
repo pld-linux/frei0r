@@ -9,19 +9,20 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	1.8.0
+Version:	2.2.0
 Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	https://files.dyne.org/frei0r/releases/%{name}-plugins-%{version}.tar.gz
-# Source0-md5:	45ffe53925ce0a90ce1d838c05e0a3c0
+#Source0Download: https://github.com/dyne/frei0r/releases
+Source0:	https://github.com/dyne/frei0r/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	01100970dcced873634da62c2b30c956
 URL:		https://frei0r.dyne.org/
-BuildRequires:	cmake >= 2.8
+BuildRequires:	cmake >= 3.1
 BuildRequires:	cairo-devel >= 1.0.0
 BuildRequires:	doxygen
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	libstdc++-devel
-%{?with_opencv:BuildRequires:	opencv-devel >= 1.0.0}
+%{?with_opencv:BuildRequires:	opencv-devel >= 4.0.0}
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -119,7 +120,7 @@ które można sterować parametrami.
 Ten pakiet zawiera plik nagłówkowy API Frei0r.
 
 %prep
-%setup -q -n frei0r-plugins-%{version}
+%setup -q
 
 %build
 mkdir -p build
@@ -140,7 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS.txt ChangeLog.txt README.txt
+%doc AUTHORS ChangeLog README.md
 %dir %{_libdir}/frei0r-1
 
 %files plugins
@@ -230,6 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/partik0l.so
 %attr(755,root,root) %{_libdir}/frei0r-1/perspective.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pixeliz0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/pixs0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/plasma.so
 %attr(755,root,root) %{_libdir}/frei0r-1/posterize.so
 %attr(755,root,root) %{_libdir}/frei0r-1/pr0be.so
@@ -245,6 +247,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/select0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/sharpness.so
 %attr(755,root,root) %{_libdir}/frei0r-1/sigmoidaltransfer.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_push-down.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_push-left.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_push-right.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_push-up.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_slide-down.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_slide-left.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_slide-right.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_slide-up.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-barn-door-h.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-barn-door-v.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-circle.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-down.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-left.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-rect.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-right.so
+%attr(755,root,root) %{_libdir}/frei0r-1/sleid0r_wipe-up.so
 %attr(755,root,root) %{_libdir}/frei0r-1/sobel.so
 %attr(755,root,root) %{_libdir}/frei0r-1/softglow.so
 %attr(755,root,root) %{_libdir}/frei0r-1/softlight.so

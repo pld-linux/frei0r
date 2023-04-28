@@ -10,7 +10,7 @@ Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
 Version:	2.2.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/dyne/frei0r/releases
@@ -22,7 +22,7 @@ BuildRequires:	cairo-devel >= 1.0.0
 BuildRequires:	doxygen
 BuildRequires:	gavl-devel >= 0.2.3
 BuildRequires:	libstdc++-devel
-%{?with_opencv:BuildRequires:	opencv-devel >= 4.0.0}
+%{?with_opencv:BuildRequires:	opencv-devel >= 1:4.0.0}
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -126,6 +126,7 @@ Ten pakiet zawiera plik nagłówkowy API Frei0r.
 mkdir -p build
 cd build
 %cmake .. \
+	-DCMAKE_INSTALL_LIBDIR=%{_lib} \
 	%{!?with_opencv:-DWITHOUT_OPENCV:BOOL=ON}
 
 %{__make}

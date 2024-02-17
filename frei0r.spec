@@ -9,13 +9,13 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	2.3.0
-Release:	2
+Version:	2.3.1
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/dyne/frei0r/releases
 Source0:	https://github.com/dyne/frei0r/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	5dea1014bc840fd34fdf729fb73ffdce
+# Source0-md5:	998ea7296442c7e1ec98bb1a50079e7e
 URL:		https://frei0r.dyne.org/
 BuildRequires:	cmake >= 3.1
 BuildRequires:	cairo-devel >= 1.0.0
@@ -156,14 +156,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/addition.so
 %attr(755,root,root) %{_libdir}/frei0r-1/addition_alpha.so
 %attr(755,root,root) %{_libdir}/frei0r-1/aech0r.so
-%attr(755,root,root) %{_libdir}/frei0r-1/alpha0ps.so
+%attr(755,root,root) %{_libdir}/frei0r-1/alpha0ps_alpha0ps.so
+%attr(755,root,root) %{_libdir}/frei0r-1/alpha0ps_alphagrad.so
+%attr(755,root,root) %{_libdir}/frei0r-1/alpha0ps_alphaspot.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphaatop.so
-%attr(755,root,root) %{_libdir}/frei0r-1/alphagrad.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphain.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphainjection.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphaout.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphaover.so
-%attr(755,root,root) %{_libdir}/frei0r-1/alphaspot.so
 %attr(755,root,root) %{_libdir}/frei0r-1/alphaxor.so
 %attr(755,root,root) %{_libdir}/frei0r-1/balanc0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/baltan.so
@@ -191,6 +191,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/defish0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/delay0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/delaygrab.so
+%attr(755,root,root) %{_libdir}/frei0r-1/denoise_hqdn3d.so
 %attr(755,root,root) %{_libdir}/frei0r-1/difference.so
 %attr(755,root,root) %{_libdir}/frei0r-1/distort0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/dither.so
@@ -207,11 +208,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/grain_extract.so
 %attr(755,root,root) %{_libdir}/frei0r-1/grain_merge.so
 %attr(755,root,root) %{_libdir}/frei0r-1/hardlight.so
-%attr(755,root,root) %{_libdir}/frei0r-1/hqdn3d.so
 %attr(755,root,root) %{_libdir}/frei0r-1/hue.so
 %attr(755,root,root) %{_libdir}/frei0r-1/hueshift0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/invert0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/ising0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/kaleid0sc0pe.so
 %attr(755,root,root) %{_libdir}/frei0r-1/keyspillm0pup.so
 %attr(755,root,root) %{_libdir}/frei0r-1/lenscorrection.so
 %attr(755,root,root) %{_libdir}/frei0r-1/letterb0xed.so
@@ -221,6 +222,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/lissajous0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/luminance.so
 %attr(755,root,root) %{_libdir}/frei0r-1/mask0mate.so
+%attr(755,root,root) %{_libdir}/frei0r-1/measure_pr0be.so
+%attr(755,root,root) %{_libdir}/frei0r-1/measure_pr0file.so
 %attr(755,root,root) %{_libdir}/frei0r-1/medians.so
 %attr(755,root,root) %{_libdir}/frei0r-1/multiply.so
 %attr(755,root,root) %{_libdir}/frei0r-1/nervous.so
@@ -235,8 +238,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/pixs0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/plasma.so
 %attr(755,root,root) %{_libdir}/frei0r-1/posterize.so
-%attr(755,root,root) %{_libdir}/frei0r-1/pr0be.so
-%attr(755,root,root) %{_libdir}/frei0r-1/pr0file.so
 %attr(755,root,root) %{_libdir}/frei0r-1/premultiply.so
 %attr(755,root,root) %{_libdir}/frei0r-1/primaries.so
 %attr(755,root,root) %{_libdir}/frei0r-1/rgbnoise.so
@@ -271,7 +272,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/spillsupress.so
 %attr(755,root,root) %{_libdir}/frei0r-1/squareblur.so
 %attr(755,root,root) %{_libdir}/frei0r-1/subtract.so
-%attr(755,root,root) %{_libdir}/frei0r-1/tehRoxx0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/tehroxx0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/test_pat_B.so
 %attr(755,root,root) %{_libdir}/frei0r-1/test_pat_C.so
 %attr(755,root,root) %{_libdir}/frei0r-1/test_pat_G.so

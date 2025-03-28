@@ -9,13 +9,13 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	2.3.1
+Version:	2.3.3
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/dyne/frei0r/releases
 Source0:	https://github.com/dyne/frei0r/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	998ea7296442c7e1ec98bb1a50079e7e
+# Source0-md5:	f96f73cbf3270cbce1a22e12aeb8fb1e
 URL:		https://frei0r.dyne.org/
 BuildRequires:	cmake >= 3.1
 BuildRequires:	cairo-devel >= 1.0.0
@@ -201,8 +201,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/frei0r-1/elastic_scale.so
 %attr(755,root,root) %{_libdir}/frei0r-1/emboss.so
 %attr(755,root,root) %{_libdir}/frei0r-1/equaliz0r.so
+%attr(755,root,root) %{_libdir}/frei0r-1/filmgrain.so
 %attr(755,root,root) %{_libdir}/frei0r-1/flippo.so
 %attr(755,root,root) %{_libdir}/frei0r-1/gamma.so
+%attr(755,root,root) %{_libdir}/frei0r-1/gateweave.so
 %attr(755,root,root) %{_libdir}/frei0r-1/glitch0r.so
 %attr(755,root,root) %{_libdir}/frei0r-1/glow.so
 %attr(755,root,root) %{_libdir}/frei0r-1/grain_extract.so

@@ -9,14 +9,15 @@
 Summary:	Minimalistic plugin API for video effects - common package
 Summary(pl.UTF-8):	Minimalistyczne API wtyczek efektów wideo - wspólny pakiet
 Name:		frei0r
-Version:	3.2.1
-Release:	2
+Version:	3.7.1
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/dyne/frei0r/releases
 Source0:	https://github.com/dyne/frei0r/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	d72555cc6c578360164e6eda5640642f
+# Source0-md5:	e0d493841bd66a441e05d7832fc7bf93
 URL:		https://frei0r.dyne.org/
+BuildRequires:	EGL-devel
 BuildRequires:	cmake >= 3.12
 BuildRequires:	cairo-devel >= 1.0.0
 BuildRequires:	doxygen
@@ -46,7 +47,7 @@ Ten pakiet jest wspólny dla wszystkich wtyczek Frei0r.
 Summary:	Base set of Frei0r plugins
 Summary(pl.UTF-8):	Podstawowy zestaw wtyczek Frei0r
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description plugins
 Base set of Frei0r plugins.
@@ -58,23 +59,37 @@ Podstawowy zestaw wtyczek Frei0r.
 Summary:	Frei0r plugins that use Cairo library
 Summary(pl.UTF-8):	Wtyczki Frei0r wykorzystujące bibliotekę Cairo
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	cairo >= 1.0.0
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	cairo%{?_isa} >= 1.0.0
 
 %description plugins-cairo
 Frei0r plugins that use Cairo library: cairoaffineblend, cairoblend,
-cairogradient, cairoimagegrid, ndvi.
+cairogradient, cairoimagegrid, mirr0r, ndvi, shake0scillate.
 
 %description plugins-cairo -l pl.UTF-8
 Wtyczki Frei0r wykorzystujące bibliotekę Cairo: cairoaffineblend,
-cairoblend, cairogradient, cairoimagegrid, ndvi.
+cairoblend, cairogradient, cairoimagegrid, mirr0r, ndvi,
+shake0scillate.
+
+%package plugins-egl
+Summary:	Frei0r plugins that use EGL library
+Summary(pl.UTF-8):	Wtyczki Frei0r wykorzystujące bibliotekę EGL
+Group:		Libraries
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+
+%description plugins-egl
+Frei0r plugin that use EGL library: shadert0y.
+cairogradient, cairoimagegrid, ndvi.
+
+%description plugins-egl -l pl.UTF-8
+Wtyczki Frei0r wykorzystujące bibliotekę EGL: shadert0y.
 
 %package plugins-gavl
 Summary:	Frei0r plugins that use GAVL library
 Summary(pl.UTF-8):	Wtyczki Frei0r wykorzystujące bibliotekę GAVL
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	gavl >= 0.2.3
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	gavl%{?_isa} >= 0.2.3
 
 %description plugins-gavl
 Frei0r plugins that use GAVL library: scale0tilt, vectorscope,
@@ -88,8 +103,8 @@ vectorscope, rgbparade.
 Summary:	Frei0r plugins that use OpenCV library
 Summary(pl.UTF-8):	Wtyczki Frei0r wykorzystujące bibliotekę OpenCV
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	opencv >= 1.0.0
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	opencv%{?_isa} >= 1.0.0
 
 %description plugins-opencv
 Frei0r plugins that use OpenCV library: facebl0r, facedetect.
@@ -148,6 +163,7 @@ rm -rf $RPM_BUILD_ROOT
 %files plugins
 %defattr(644,root,root,755)
 %{_libdir}/frei0r-1/3dflippo.so
+%{_libdir}/frei0r-1/3dperspective.so
 %{_libdir}/frei0r-1/B.so
 %{_libdir}/frei0r-1/G.so
 %{_libdir}/frei0r-1/IIRblur.so
@@ -206,6 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/euclid_eraser.so
 %{_libdir}/frei0r-1/filmgrain.so
 %{_libdir}/frei0r-1/flippo.so
+%{_libdir}/frei0r-1/flarefx.so
 %{_libdir}/frei0r-1/gamma.so
 %{_libdir}/frei0r-1/gateweave.so
 %{_libdir}/frei0r-1/glitch0r.so
@@ -213,6 +230,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/grain_extract.so
 %{_libdir}/frei0r-1/grain_merge.so
 %{_libdir}/frei0r-1/hardlight.so
+%{_libdir}/frei0r-1/harris0r.so
 %{_libdir}/frei0r-1/heatmap0r.so
 %{_libdir}/frei0r-1/hue.so
 %{_libdir}/frei0r-1/hueshift0r.so
@@ -231,6 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/measure_pr0be.so
 %{_libdir}/frei0r-1/measure_pr0file.so
 %{_libdir}/frei0r-1/medians.so
+%{_libdir}/frei0r-1/motiondiff0r.so
 %{_libdir}/frei0r-1/multiply.so
 %{_libdir}/frei0r-1/nervous.so
 %{_libdir}/frei0r-1/nois0r.so
@@ -242,6 +261,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/partik0l.so
 %{_libdir}/frei0r-1/perspective.so
 %{_libdir}/frei0r-1/pixeliz0r.so
+%{_libdir}/frei0r-1/pixels0rt.so
 %{_libdir}/frei0r-1/pixs0r.so
 %{_libdir}/frei0r-1/plasma.so
 %{_libdir}/frei0r-1/posterize.so
@@ -272,12 +292,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/sleid0r_wipe-rect.so
 %{_libdir}/frei0r-1/sleid0r_wipe-right.so
 %{_libdir}/frei0r-1/sleid0r_wipe-up.so
+%{_libdir}/frei0r-1/slitscan0r.so
 %{_libdir}/frei0r-1/sobel.so
 %{_libdir}/frei0r-1/softglow.so
 %{_libdir}/frei0r-1/softlight.so
 %{_libdir}/frei0r-1/sopsat.so
 %{_libdir}/frei0r-1/spillsupress.so
 %{_libdir}/frei0r-1/squareblur.so
+%{_libdir}/frei0r-1/squigglevision.so
 %{_libdir}/frei0r-1/subtract.so
 %{_libdir}/frei0r-1/tehroxx0r.so
 %{_libdir}/frei0r-1/test_pat_B.so
@@ -298,6 +320,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/vertigo.so
 %{_libdir}/frei0r-1/vignette.so
 %{_libdir}/frei0r-1/water.so
+%{_libdir}/frei0r-1/whirlpinch0r.so
 %{_libdir}/frei0r-1/xfade0r.so
 
 %files plugins-cairo
@@ -308,6 +331,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/frei0r-1/cairoimagegrid.so
 %{_libdir}/frei0r-1/mirr0r.so
 %{_libdir}/frei0r-1/ndvi.so
+%{_libdir}/frei0r-1/shake0scillate.so
+
+%files plugins-egl
+%defattr(644,root,root,755)
+%{_libdir}/frei0r-1/shadert0y.so
 
 %files plugins-gavl
 %defattr(644,root,root,755)
